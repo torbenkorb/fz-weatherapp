@@ -24,11 +24,13 @@
 
 @media (max-width: 768px) {
 
-  [data-icon]:before {
-    font-size: 2rem;
-  }
+  
 
   .forecast {
+
+    [data-icon]:before {
+      font-size: 2rem;
+    }
 
     p {
       font-size: .8rem;
