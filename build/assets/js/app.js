@@ -61,6 +61,8 @@
   var forecastJsonApiRes = angular.module('application');
   forecastJsonApiRes.controller('ForecastApi', function($scope, $http) {
 
+      $scope.Math = window.Math;
+
       $scope.loadWeather = function(cityCoords) {
         var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
         var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
@@ -95,7 +97,11 @@
         $scope.loadCity('Frankfurt');
       };
       $scope.loadDefaultCity();
-      $scope.Math = window.Math;
+
+      $scope.reloadCity = function() {
+        $scope.loadCity($scope.city);
+      };
+      
     });
 
 

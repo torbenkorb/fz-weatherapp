@@ -20,3 +20,24 @@
   display: inline-block;
   margin-top: 5%;
 }
+
+
+@media (max-width: 768px) {
+
+  [data-icon]:before {
+    font-size: 2rem;
+  }
+
+  .forecast {
+
+    p {
+      font-size: .8rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
+  }
+
+
+}
