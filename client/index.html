@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" ng-app="application">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation for Apps</title>
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+    <script src="./assets/js/foundation.js"></script>
+    <script src="./assets/js/templates.js"></script>
+    <script src="./assets/js/routes.js"></script>
+    <script src="./assets/js/app.js"></script>
+  </head>
+  <body ng-controller="ForecastApi">
+
+    <zf-offcanvas id="menu" position="left">
+      <a zf-close="" class="close-button">×</a>
+      <section class="block-list">
+      <header>Select a city</header>
+      <ul>
+       
+      <li ui-sref-active="myClass"><a zf-close="menu" ui-sref="about">About</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Frankfurt</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Berlin</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">London</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">New York</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Los Angeles</a></li>
+      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Tokyo</a></li>
+      </ul>
+      </section>
+    </zf-offcanvas>
+    
+    <div class="grid-frame vertical">
+      <div class="grid-content shrink" style="padding: 0;">
+
+        <div class="primary title-bar">
+          <div class="center title"><a zf-close="menu" ui-sref="home">WeatherApp</a></div>
+          <span class="left"><a zf-toggle="menu">&#9776; Menu</a></span>
+        </div>
+
+      </div>
+
+      <div ui-view class="grid-content text-center"></div>
+
+    </div>
+  </body>
+</html>

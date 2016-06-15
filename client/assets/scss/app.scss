@@ -1,0 +1,14 @@
+@import "settings";
+@import "foundation";
+@import "fonts";
+
+
+.has-off-canvas {
+  overflow-x: hidden;
+}
+
+.block-list header {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 48px;
+}
