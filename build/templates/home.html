@@ -1,10 +1,20 @@
 
 <div class="grid-container">
 
-  <h1 data-icon="R"></h1>
+  <h1 data-icon="{{ icon }}"></h1>
   <h1>{{ Math.round(json.currently.temperature) }}&#176;C</h1>
   <p class="lead">{{ json.currently.summary }}</p>
   <p>{{ city }}</p>
+
+  <div class="grid-block text-center">
+    <div class="vertical grid-block">
+      <p>Tomorrow</p>
+      <h3 data-icon="{{ icon }}"></h3>
+      <h3>{{ Math.round(json.daily.data['temperatureMin']) }}&#176;C</h3>
+    </div>
+    <div class="grid-block">Aftertomorrow</div>
+    <div class="grid-block">AAT</div>
+  </div>
 
 
 </div>

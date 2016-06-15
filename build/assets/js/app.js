@@ -20,7 +20,7 @@
     $urlProvider.otherwise('/');
 
     $locationProvider.html5Mode({
-      enabled:true,
+      enabled:false,
       requireBase: false
     });
 
@@ -66,7 +66,7 @@
         var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
         $http.jsonp(forecastURL).then(function(res){
           $scope.json = res.data;
-          // set icon 
+          $scope.icon = icons[$scope.json.currently.icon];          
         });
       };
 
