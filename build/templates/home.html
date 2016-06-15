@@ -10,7 +10,9 @@
     <div class="vertical grid-block">
       <p>Tomorrow</p>
       <h3 data-icon="{{ icon }}"></h3>
-      <h3>{{ Math.round(json.daily.data['temperatureMin']) }}&#176;C</h3>
+      <h3>{{ Math.round(json.daily.data[0].temperatureMin) }}&#176;C</h3>
+      <p>{{ json.daily.data[0].time }}</p>
+      <p>{{ json.daily.data[1].time }}</p>
     </div>
     <div class="grid-block">Aftertomorrow</div>
     <div class="grid-block">AAT</div>
