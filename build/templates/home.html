@@ -14,8 +14,12 @@
       <p>{{ json.daily.data[0].time }}</p>
       <p>{{ json.daily.data[1].time }}</p>
     </div>
-    <div class="grid-block">Aftertomorrow</div>
-    <div class="grid-block">AAT</div>
+    <div class="grid-block">
+      <h3>{{ Math.round(json.daily.data[1].temperatureMin) }}&#176;C</h3>
+    </div>
+    <div class="grid-block">
+      <h3>{{ Math.round(json.daily.data[2].temperatureMin) }}&#176;C</h3>
+    </div>
   </div>
 
 
