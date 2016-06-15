@@ -67,6 +67,9 @@
         $http.jsonp(forecastURL).then(function(res){
           $scope.json = res.data;
           $scope.icon = icons[$scope.json.currently.icon];          
+          $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
+          $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
+          $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
         });
       };
 
