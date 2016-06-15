@@ -108,7 +108,7 @@ gulp.task('sass', function () {
       errLogToConsole: true
     }))
     .pipe($.autoprefixer({
-      browsers: ['last 2 versions', 'ie 10']
+      browsers: ['last 2 versions', 'ie 10', '> 5%']
     }))
     .pipe(minifyCss)
     .pipe(gulp.dest('./build/assets/css/'))
