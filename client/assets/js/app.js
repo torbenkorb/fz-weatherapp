@@ -98,10 +98,16 @@
       };
       $scope.loadDefaultCity();
 
-      $scope.reloadCity = function() {
+      var degrees = 360;
+
+      $scope.reloadCity = function(e) {
         $scope.loadCity($scope.city);
+        angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
+        angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
+        degrees += 360;
       };
-      
+
+
     });
 
 

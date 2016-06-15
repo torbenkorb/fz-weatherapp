@@ -5885,7 +5885,7 @@ blockquote p {
   display: inline-block;
   margin-top: 5%; }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .forecast [data-icon]:before {
     font-size: 2rem; }
   .forecast p {
