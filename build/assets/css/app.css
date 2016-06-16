@@ -5955,13 +5955,13 @@ td {
 
 /* Default Link Styles */
 a {
-  color: #00558b;
+  color: #fff;
   text-decoration: none;
   line-height: inherit; }
   a[ui-sref] {
     cursor: pointer; }
   a:hover, a:focus {
-    color: #004978; }
+    color: #dbdbdb; }
   a img {
     border: none; }
 
@@ -6535,15 +6535,22 @@ blockquote p {
   font-weight: normal;
   font-style: normal; }
 
-[data-icon]:before {
+[data-icon] {
   font-family: 'MeteoconsRegular';
-  content: attr(data-icon);
   font-size: 5rem;
   font-weight: normal;
   font-style: normal;
+  font-variant: normal;
+  text-transform: none;
   line-height: 1;
   display: inline-block;
   margin-top: 5%; }
+
+[data-icon]:before {
+  content: attr(data-icon); }
+
+.main-content a {
+  border-bottom: 1px solid; }
 
 @media (max-width: 767px) {
   .forecast [data-icon]:before {

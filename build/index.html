@@ -26,15 +26,14 @@
       <section class="block-list">
       <header>Select a city</header>
       <ul>
-       
-      <li ui-sref-active="myClass"><a zf-close="menu" ui-sref="about">About</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Frankfurt</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Berlin</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">London</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">New York</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Los Angeles</a></li>
-      <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Tokyo</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Frankfurt</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Berlin</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">London</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">New York</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Los Angeles</a></li>
+        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Tokyo</a></li>
+        <li ui-sref-active="myClass"><a zf-close="menu" ui-sref="about">About</a></li>
       </ul>
       </section>
     </zf-offcanvas>
@@ -50,7 +49,7 @@
 
       </div>
 
-      <div ui-view class="grid-content text-center"></div>
+      <div ui-view class="main-content grid-content text-center"></div>
 
     </div>
   </body>
