@@ -31,22 +31,8 @@
     FastClick.attach(document.body);
   }
 
-  // var icons = {
 
-  //   "clear-day" : "B",
-  //   "clear-night" : "C",
-  //   "rain" : "R",
-  //   "snow" : "G",
-  //   "sleet" : "X",
-  //   "wind" : "S",
-  //   "fog" : "N",
-  //   "cloudy" : "Y",
-  //   "partly-cloudy-day" : "H",
-  //   "partly-cloudy-night" : "I"
-
-  // };
-
-    var icons = {
+  var icons = {
 
     "clear-day" : "icon-2",
     "clear-night" : "icon-3",
