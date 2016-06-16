@@ -31,20 +31,37 @@
     FastClick.attach(document.body);
   }
 
-  var icons = {
+  // var icons = {
 
-    "clear-day" : "B",
-    "clear-night" : "C",
-    "rain" : "R",
-    "snow" : "G",
-    "sleet" : "X",
-    "wind" : "S",
-    "fog" : "N",
-    "cloudy" : "Y",
-    "partly-cloudy-day" : "H",
-    "partly-cloudy-night" : "I"
+  //   "clear-day" : "B",
+  //   "clear-night" : "C",
+  //   "rain" : "R",
+  //   "snow" : "G",
+  //   "sleet" : "X",
+  //   "wind" : "S",
+  //   "fog" : "N",
+  //   "cloudy" : "Y",
+  //   "partly-cloudy-day" : "H",
+  //   "partly-cloudy-night" : "I"
+
+  // };
+
+    var icons = {
+
+    "clear-day" : "icon-2",
+    "clear-night" : "icon-3",
+    "rain" : "icon-18",
+    "snow" : "icon-7",
+    "sleet" : "icon-24",
+    "wind" : "icon-19",
+    "fog" : "icon-14",
+    "cloudy" : "icon-25",
+    "partly-cloudy-day" : "icon-8",
+    "partly-cloudy-night" : "icon-9"
 
   };
+
+
 
   var cities = {
 
