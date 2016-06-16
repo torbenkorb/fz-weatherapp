@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/ios/AppIcon.appiconset/Icon-76.png" />
     <link rel="apple-touch-icon" sizes="152x152" href="./assets/ios/AppIcon.appiconset/Icon-76@2x.png" />
     <link rel="apple-touch-icon" sizes="58x58" href="./assets/ios/AppIcon.appiconset/Icon-Small@2x.png" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
     <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
     <script src="./assets/js/foundation.js"></script>
@@ -42,8 +43,8 @@
       <div class="grid-content shrink" style="padding: 0;">
 
         <div class="title-bar">
-<!--           <div class="center title"><a zf-close="menu" ui-sref="home">WeatherApp</a></div>
- -->          <span class="left"><a zf-toggle="menu">&#9776; Menu</a></span>
+<!--           <div class="center title"><a zf-close="menu" ui-sref="home">{{ city }}</a></div>
+ -->          <span class="left"><a zf-toggle="menu"><img zf-iconic="" icon="cog" size="small" class="iconic-color-secondary"> {{ city }}</a></span>
           <span class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="small" class="iconic-color-secondary"></a></span>
         </div>
 
