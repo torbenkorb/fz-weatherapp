@@ -6546,6 +6546,7 @@ blockquote p {
   text-transform: none;
   line-height: 1;
   display: inline-block;
+  margin: 5% auto 0;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
