@@ -19,7 +19,8 @@
   text-transform: none;
   line-height: 1;
   display: inline-block;
-  margin-top: 5%;
+  width: 5rem;
+  margin: 5% auto 0;
 }
 
 [data-icon]:before {
@@ -38,8 +39,9 @@
 
   .forecast {
 
-    [data-icon]:before {
+    [data-icon] {
       font-size: 2rem;
+      width: 2rem;
     }
 
     p {

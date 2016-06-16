@@ -6544,7 +6544,8 @@ blockquote p {
   text-transform: none;
   line-height: 1;
   display: inline-block;
-  margin-top: 5%; }
+  width: 5rem;
+  margin: 5% auto 0; }
 
 [data-icon]:before {
   content: attr(data-icon); }
@@ -6553,8 +6554,9 @@ blockquote p {
   border-bottom: 1px solid; }
 
 @media (max-width: 767px) {
-  .forecast [data-icon]:before {
-    font-size: 2rem; }
+  .forecast [data-icon] {
+    font-size: 2rem;
+    width: 2rem; }
   .forecast p {
     font-size: .8rem; }
   .forecast h3 {
