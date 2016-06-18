@@ -76,6 +76,7 @@
           $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
           $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
         });
+
       };
 
       $scope.loadCity = function(city) {

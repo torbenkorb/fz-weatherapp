@@ -19,7 +19,7 @@
     <script src="./assets/js/routes.js"></script>
     <script src="./assets/js/app.js"></script>
   </head>
-  <body ng-controller="ForecastApi">
+  <body ng-controller="ForecastApi" zf-esc-close>
 
     <zf-offcanvas id="menu" position="left" zf-swipe-close="left">
       <a zf-close="" class="close-button">×</a>
@@ -42,8 +42,8 @@
       <div class="grid-content shrink" style="padding: 0;">
 
         <div class="title-bar">
-          <span class="left"><a zf-toggle="menu"><img zf-iconic="" icon="cog" size="small" class="iconic-color-secondary"></a></span>
-          <span class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="small" class="iconic-color-secondary"></a></span>
+          <span class="left"><a zf-toggle="menu"><img zf-iconic="" icon="cog" size="medium" class="iconic-color-secondary"></a></span>
+          <span class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="medium" class="iconic-color-secondary"></a></span>
         </div>
 
       </div>

@@ -13,6 +13,12 @@
 .title-bar a {
   color: #fff;
 
+  svg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg), 
+  svg.iconic.iconic-size-md {
+    width: 24px;
+    height: 24px;
+  }
+
   & > .iconic * {
     fill: #fff;
     stroke: #fff;

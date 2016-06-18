@@ -6696,7 +6696,8 @@ blockquote p {
   border-bottom: 1px solid; }
 
 .location {
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  letter-spacing: -0.025em; }
 
 @media (max-width: 767px) {
   .forecast [class^="icon-"], .forecast [class*=" icon-"] {
@@ -6712,6 +6713,10 @@ blockquote p {
 
 .title-bar a {
   color: #fff; }
+  .title-bar a svg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg),
+  .title-bar a svg.iconic.iconic-size-md {
+    width: 24px;
+    height: 24px; }
   .title-bar a > .iconic * {
     fill: #fff;
     stroke: #fff; }
