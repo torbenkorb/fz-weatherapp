@@ -10,6 +10,58 @@
     'foundation.dynamicRouting',
     'foundation.dynamicRouting.animations'
   ])
+    .controller('ForecastApi', function($scope, $http, $location) {
+
+      $scope.Math = window.Math;
+      $scope.location = $location;
+
+      $scope.loadWeather = function(cityCoords) {
+        var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
+        var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
+        $http.jsonp(forecastURL).then(function(res){
+          $scope.json = res.data;
+          $scope.icon = icons[$scope.json.currently.icon];          
+          $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
+          $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
+          $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
+        });
+
+      };
+
+      $scope.loadCity = function(city) {
+        $scope.city = city;
+        if(city.toLowerCase() == "current location") {
+          if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
+          } else {
+            $scope.loadDefaultCity();
+          }
+        } else {
+          $scope.loadWeather(cities[city.toLowerCase()]);
+        }
+      };
+    
+      $scope.acceptSelection = function(e) {
+        var city = e.currentTarget.innerHTML;
+        $scope.loadCity(city);
+      };
+
+      $scope.loadDefaultCity = function() {
+        $scope.loadCity('Frankfurt');
+      };
+      $scope.loadDefaultCity();
+
+      var degrees = 360;
+
+      $scope.reloadCity = function(e) {
+        $scope.loadCity($scope.city);
+        angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
+        angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
+        degrees += 360;
+      };
+
+
+    })
     .config(config)
     .run(run)
   ;
@@ -61,58 +113,58 @@
 
   };
 
-  var forecastJsonApiRes = angular.module('application');
-  forecastJsonApiRes.controller('ForecastApi', function($scope, $http) {
+  // var forecastJsonApiRes = angular.module('application');
+  // forecastJsonApiRes.controller('ForecastApi', function($scope, $http) {
 
-      $scope.Math = window.Math;
+  //   $scope.Math = window.Math;
 
-      $scope.loadWeather = function(cityCoords) {
-        var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
-        var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
-        $http.jsonp(forecastURL).then(function(res){
-          $scope.json = res.data;
-          $scope.icon = icons[$scope.json.currently.icon];          
-          $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
-          $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
-          $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
-        });
+  //   $scope.loadWeather = function(cityCoords) {
+  //     var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
+  //     var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
+  //     $http.jsonp(forecastURL).then(function(res){
+  //       $scope.json = res.data;
+  //       $scope.icon = icons[$scope.json.currently.icon];          
+  //       $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
+  //       $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
+  //       $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
+  //     });
 
-      };
+  //   };
 
-      $scope.loadCity = function(city) {
-        $scope.city = city;
-        if(city.toLowerCase() == "current location") {
-          if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
-          } else {
-            $scope.loadDefaultCity();
-          }
-        } else {
-          $scope.loadWeather(cities[city.toLowerCase()]);
-        }
-      };
-    
-      $scope.acceptSelection = function(e) {
-        var city = e.currentTarget.innerHTML;
-        $scope.loadCity(city);
-      };
+  //   $scope.loadCity = function(city) {
+  //     $scope.city = city;
+  //     if(city.toLowerCase() == "current location") {
+  //       if(navigator.geolocation) {
+  //         navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
+  //       } else {
+  //         $scope.loadDefaultCity();
+  //       }
+  //     } else {
+  //       $scope.loadWeather(cities[city.toLowerCase()]);
+  //     }
+  //   };
+  
+  //   $scope.acceptSelection = function(e) {
+  //     var city = e.currentTarget.innerHTML;
+  //     $scope.loadCity(city);
+  //   };
 
-      $scope.loadDefaultCity = function() {
-        $scope.loadCity('Frankfurt');
-      };
-      $scope.loadDefaultCity();
+  //   $scope.loadDefaultCity = function() {
+  //     $scope.loadCity('Frankfurt');
+  //   };
+  //   $scope.loadDefaultCity();
 
-      var degrees = 360;
+  //   var degrees = 360;
 
-      $scope.reloadCity = function(e) {
-        $scope.loadCity($scope.city);
-        angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
-        angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
-        degrees += 360;
-      };
+  //   $scope.reloadCity = function(e) {
+  //     $scope.loadCity($scope.city);
+  //     angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
+  //     angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
+  //     degrees += 360;
+  //   };
 
 
-    });
+  // });
 
 
 })();

@@ -33,7 +33,7 @@
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">New York</a></li>
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Los Angeles</a></li>
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Tokyo</a></li>
-        <li ui-sref-active="myClass"><a zf-close="menu" ui-sref="about">About</a></li>
+        <li><a zf-close="menu" ui-sref="about">About</a></li>
       </ul>
       </section>
     </zf-offcanvas>
@@ -43,11 +43,11 @@
 
         <div class="title-bar">
           <span class="left"><a zf-toggle="menu"><img zf-iconic="" icon="cog" size="medium" class="iconic-color-secondary"></a></span>
-          <span class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="medium" class="iconic-color-secondary"></a></span>
+          <span ng-if="location.path() != '/about'" class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="medium" class="iconic-color-secondary"></a></span>
         </div>
 
       </div>
-
+      
       <div ui-view class="main-content grid-content text-center"></div>
 
     </div>
