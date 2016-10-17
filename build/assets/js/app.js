@@ -35,6 +35,7 @@
         $scope.city = city;
         if(city.toLowerCase() == "current location") {
           if(navigator.geolocation) {
+            $scope.loading = true;
             navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
           } else {
             $scope.loadDefaultCity();
