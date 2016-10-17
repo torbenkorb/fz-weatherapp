@@ -18,7 +18,7 @@
       $scope.loadWeather = function(cityCoords) {
         $scope.loading = true;
         var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
-        var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
+        var forecastURL = 'https://api.darksky.net/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
         $http.jsonp(forecastURL).then(function(res){
           $scope.json = res.data;
           $scope.icon = icons[$scope.json.currently.icon];
