@@ -16,14 +16,17 @@
       $scope.location = $location;
 
       $scope.loadWeather = function(cityCoords) {
+        $scope.loading = true;
         var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
         var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
         $http.jsonp(forecastURL).then(function(res){
           $scope.json = res.data;
-          $scope.icon = icons[$scope.json.currently.icon];          
-          $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
-          $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
-          $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
+          $scope.icon = icons[$scope.json.currently.icon];
+          $scope.icon1 = icons[$scope.json.daily.data[1].icon];
+          $scope.icon2 = icons[$scope.json.daily.data[2].icon];
+          $scope.icon3 = icons[$scope.json.daily.data[3].icon];
+        }).finally(function() {
+          $scope.loading = false;
         });
 
       };
@@ -40,7 +43,7 @@
           $scope.loadWeather(cities[city.toLowerCase()]);
         }
       };
-    
+
       $scope.acceptSelection = function(e) {
         var city = e.currentTarget.innerHTML;
         $scope.loadCity(city);
@@ -55,9 +58,9 @@
 
       $scope.reloadCity = function(e) {
         $scope.loadCity($scope.city);
-        angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
-        angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
-        degrees += 360;
+        // angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
+        // angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
+        // degrees += 360;
       };
 
 
@@ -83,7 +86,6 @@
     FastClick.attach(document.body);
   }
 
-
   var icons = {
 
     "clear-day" : "icon-2",
@@ -99,8 +101,6 @@
 
   };
 
-
-
   var cities = {
 
     "frankfurt" : { coords: { latitude: 50.1109221, longitude: 8.682126700000026 } },
@@ -112,59 +112,5 @@
     "current location" : {}
 
   };
-
-  // var forecastJsonApiRes = angular.module('application');
-  // forecastJsonApiRes.controller('ForecastApi', function($scope, $http) {
-
-  //   $scope.Math = window.Math;
-
-  //   $scope.loadWeather = function(cityCoords) {
-  //     var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
-  //     var forecastURL = 'https://api.forecast.io/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
-  //     $http.jsonp(forecastURL).then(function(res){
-  //       $scope.json = res.data;
-  //       $scope.icon = icons[$scope.json.currently.icon];          
-  //       $scope.icon1 = icons[$scope.json.daily.data[1].icon];          
-  //       $scope.icon2 = icons[$scope.json.daily.data[2].icon];          
-  //       $scope.icon3 = icons[$scope.json.daily.data[3].icon];          
-  //     });
-
-  //   };
-
-  //   $scope.loadCity = function(city) {
-  //     $scope.city = city;
-  //     if(city.toLowerCase() == "current location") {
-  //       if(navigator.geolocation) {
-  //         navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
-  //       } else {
-  //         $scope.loadDefaultCity();
-  //       }
-  //     } else {
-  //       $scope.loadWeather(cities[city.toLowerCase()]);
-  //     }
-  //   };
-  
-  //   $scope.acceptSelection = function(e) {
-  //     var city = e.currentTarget.innerHTML;
-  //     $scope.loadCity(city);
-  //   };
-
-  //   $scope.loadDefaultCity = function() {
-  //     $scope.loadCity('Frankfurt');
-  //   };
-  //   $scope.loadDefaultCity();
-
-  //   var degrees = 360;
-
-  //   $scope.reloadCity = function(e) {
-  //     $scope.loadCity($scope.city);
-  //     angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
-  //     angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
-  //     degrees += 360;
-  //   };
-
-
-  // });
-
 
 })();

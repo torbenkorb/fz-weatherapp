@@ -21,8 +21,11 @@
   </head>
   <body ng-controller="ForecastApi" zf-esc-close>
 
+    <div class="loader" ng-show="loading"><span class="loader__rotation"></span></div>
+
+
     <zf-offcanvas id="menu" position="left" zf-swipe-close="left">
-      <a zf-close="" class="close-button">×</a>
+      <a zf-close="" class="close-button">&#735;</a>
       <section class="block-list">
       <header>Select a city</header>
       <ul>
@@ -37,17 +40,18 @@
       </ul>
       </section>
     </zf-offcanvas>
-    
+
     <div class="grid-frame vertical">
       <div class="grid-content shrink" style="padding: 0;">
 
         <div class="title-bar">
-          <span class="left"><a zf-toggle="menu"><img zf-iconic="" icon="cog" size="medium" class="iconic-color-secondary"></a></span>
+          <span class="left"><a zf-toggle="menu">&#9776;</a></span>
           <span ng-if="location.path() != '/about'" class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="medium" class="iconic-color-secondary"></a></span>
         </div>
 
       </div>
-      
+
+
       <div ui-view class="main-content grid-content text-center"></div>
 
     </div>
