@@ -41,10 +41,10 @@
       </section>
     </zf-offcanvas>
 
-    <div class="grid-frame vertical">
+    <div class="grid-frame vertical" id="mainApp">
       <div class="grid-content shrink" style="padding: 0;">
 
-        <div class="title-bar">
+        <div id="titlebar" class="title-bar">
           <span class="left"><a zf-toggle="menu">&#9776;</a></span>
           <span ng-if="location.path() != '/about'" class="right"><a ng-click="reloadCity($event)"><img zf-iconic="" icon="reload" size="medium" class="iconic-color-secondary"></a></span>
         </div>

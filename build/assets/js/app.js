@@ -65,6 +65,14 @@
       };
 
 
+      var gesture = new Hammer(document.getElementById('mainApp'));
+      gesture.on('swipe', function(ev) {
+        console.log(ev);
+        $scope.reloadCity();
+      });
+      gesture.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+
     })
     .config(config)
     .run(run)
