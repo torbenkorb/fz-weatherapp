@@ -8,6 +8,7 @@ html, body,
 .has-off-canvas {
   overflow-x: hidden;
   position: relative;
+  touch-action: none;
 }
 
 .off-canvas ~ .grid-frame {

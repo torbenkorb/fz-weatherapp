@@ -65,12 +65,11 @@
       };
 
 
-      var gesture = new Hammer(document.getElementById('mainApp'));
-      gesture.on('swipe', function(ev) {
+      var refreshGesture = new Hammer(document.getElementById('mainApp'));
+      refreshGesture.on('swipe', function(ev) {
         console.log(ev);
         $scope.reloadCity();
       });
-      gesture.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 
 
     })

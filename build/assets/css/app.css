@@ -7194,7 +7194,9 @@ blockquote p {
 html, body,
 .has-off-canvas {
   overflow-x: hidden;
-  position: relative; }
+  position: relative;
+  -ms-touch-action: none;
+      touch-action: none; }
 
 .off-canvas ~ .grid-frame {
   background-image: -webkit-linear-gradient(300deg, #3A539B 35%, #F64747);
