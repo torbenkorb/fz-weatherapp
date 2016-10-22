@@ -12,11 +12,12 @@
   ])
     .controller('ForecastApi', function($scope, $http, $location) {
 
+      console.log($scope);
+
       $scope.Math = window.Math;
       $scope.location = $location;
 
       $scope.loadWeather = function(cityCoords) {
-        $scope.loading = true;
         var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
         var forecastURL = 'https://api.darksky.net/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
         $http.jsonp(forecastURL).then(function(res){
@@ -33,9 +34,9 @@
 
       $scope.loadCity = function(city) {
         $scope.city = city;
+        $scope.loading = true;
         if(city.toLowerCase() == "current location") {
           if(navigator.geolocation) {
-            $scope.loading = true;
             navigator.geolocation.getCurrentPosition($scope.loadWeather, $scope.loadDefaultCity);
           } else {
             $scope.loadDefaultCity();
@@ -66,10 +67,20 @@
 
 
       var refreshGesture = new Hammer(document.getElementById('mainApp'));
-      refreshGesture.on('swipe', function(ev) {
-        console.log(ev);
+      refreshGesture.on('swipedown', function(ev) {
         $scope.reloadCity();
       });
+      refreshGesture.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+
+      var toggleCanvas = new Hammer(document.getElementById('mainApp'));
+      toggleCanvas.on('swiperight', function() {
+        console.log('Open the canvas');
+      });
+      toggleCanvas.on('swipeleft', function() {
+        console.log('Close the canvas');
+      });
+
 
 
     })

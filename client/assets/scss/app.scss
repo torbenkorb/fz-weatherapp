@@ -91,6 +91,87 @@ p.lead {
 }
 
 
+
+.toggleButton {
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.toggleButton .menuIcon {
+  display: block;
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #fff;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+
+.toggleButton .menuIcon:before,
+.toggleButton .menuIcon:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  left: 0;
+  background-color: #fff;
+}
+
+.toggleButton .menuIcon:before {
+  top: -8px;
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+  -webkit-transition: width .3s, top .3s, -webkit-transform .3s;
+  transition: width .3s, top .3s, -webkit-transform .3s;
+  transition: transform .3s, width .3s, top .3s;
+  transition: transform .3s, width .3s, top .3s, -webkit-transform .3s;
+}
+
+.toggleButton .menuIcon:after {
+  bottom: -8px;
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+  -webkit-transition: width 0.3s, bottom 0.3s, -webkit-transform 0.3s;
+  transition: width 0.3s, bottom 0.3s, -webkit-transform 0.3s;
+  transition: transform 0.3s, width 0.3s, bottom 0.3s;
+  transition: transform 0.3s, width 0.3s, bottom 0.3s, -webkit-transform 0.3s;
+}
+
+
+
+
+
+.off-canvas.is-active + .grid-frame .toggleButton .menuIcon {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.off-canvas.is-active + .grid-frame .toggleButton .menuIcon:before,
+.off-canvas.is-active + .grid-frame .toggleButton .menuIcon:after {
+  width: 50%;
+}
+
+.off-canvas.is-active + .grid-frame .toggleButton .menuIcon:before {
+  top: 0;
+  -webkit-transform: translateX(13px) translateY(1px) rotate(45deg);
+          transform: translateX(13px) translateY(1px) rotate(45deg);
+}
+
+.off-canvas.is-active + .grid-frame .toggleButton .menuIcon:after {
+  bottom: 0;
+  -webkit-transform: translateX(13px) translateY(-1px) rotate(-45deg);
+          transform: translateX(13px) translateY(-1px) rotate(-45deg);
+}
+
+
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
   100% { -webkit-transform: rotate(359deg); transform: rotate(359deg); }

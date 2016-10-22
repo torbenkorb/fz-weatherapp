@@ -44833,262 +44833,6 @@ angular.module('markdown', [])
 (function() {
   'use strict';
 
-  angular.module('foundation.actionsheet', ['foundation.core'])
-    .controller('ZfActionSheetController', zfActionSheetController)
-    .directive('zfActionSheet', zfActionSheet)
-    .directive('zfAsContent', zfAsContent)
-    .directive('zfAsButton', zfAsButton)
-    .service('FoundationActionSheet', FoundationActionSheet)
-  ;
-
-  FoundationActionSheet.$inject = ['FoundationApi'];
-
-  function FoundationActionSheet(foundationApi) {
-    var service    = {};
-
-    service.activate = activate;
-    service.deactivate = deactivate;
-
-    return service;
-
-    //target should be element ID
-    function activate(target) {
-      foundationApi.publish(target, 'show');
-    }
-
-    //target should be element ID
-    function deactivate(target) {
-      foundationApi.publish(target, 'hide');
-    }
-  }
-
-  zfActionSheetController.$inject = ['$scope', 'FoundationApi'];
-
-  function zfActionSheetController($scope, foundationApi) {
-    var controller = this;
-    var content = controller.content = $scope.content;
-    var container = controller.container = $scope.container;
-    var body = angular.element(document.body);
-
-    controller.registerContent = function(scope) {
-      content = scope;
-      content.active = false;
-    };
-
-    controller.registerContainer = function(scope) {
-      container = scope;
-      container.active = false;
-    };
-
-    controller.toggle = toggle;
-    controller.hide = hide;
-    controller.show = show;
-
-    controller.registerListener = function() {
-      document.body.addEventListener('click', listenerLogic);
-    };
-
-    controller.deregisterListener = function() {
-      document.body.removeEventListener('click', listenerLogic);
-    }
-
-    function listenerLogic(e) {
-      var el = e.target;
-      var insideActionSheet = false;
-
-      do {
-        if(el.classList && el.classList.contains('action-sheet-container')) {
-          insideActionSheet = true;
-          break;
-        }
-
-      } while ((el = el.parentNode));
-
-      if(!insideActionSheet) {
-        // if the element has a toggle attribute, do nothing
-        if (e.target.attributes['zf-toggle'] || e.target.attributes['zf-hard-toggle']) {
-          return;
-        };
-        // if the element is outside the action sheet and is NOT a toggle element, hide
-        hide();
-      }
-    }
-
-    function hide() {
-      content.hide();
-      container.hide();
-
-      if (!$scope.$$phase) {
-        content.$apply();
-        container.$apply();
-      }
-    }
-
-    function toggle() {
-      content.toggle();
-      container.toggle();
-
-      if (!$scope.$$phase) {
-        content.$apply();
-        container.$apply();
-      }
-    }
-
-    function show() {
-      content.show();
-      container.show();
-
-      if (!$scope.$$phase) {
-        content.$apply();
-        container.$apply();
-      }
-    }
-  }
-
-  zfActionSheet.$inject = ['FoundationApi'];
-
-  function zfActionSheet(foundationApi) {
-    var directive = {
-      restrict: 'EA',
-      transclude: true,
-      replace: true,
-      templateUrl: 'components/actionsheet/actionsheet.html',
-      controller: 'ZfActionSheetController',
-      compile: compile
-    };
-
-    return directive;
-
-    function compile() {
-
-      return {
-        pre: preLink,
-        post: postLink
-      };
-
-      function preLink(scope, iElement, iAttrs) {
-        iAttrs.$set('zf-closable', 'actionsheet');
-      }
-
-      function postLink(scope, element, attrs, controller) {
-        var id = attrs.id || foundationApi.generateUuid();
-        attrs.$set('id', id);
-
-        scope.active = false;
-
-        foundationApi.subscribe(id, function(msg) {
-          if (msg === 'toggle') {
-            controller.toggle();
-          }
-
-          if (msg === 'hide' || msg === 'close') {
-            controller.hide();
-          }
-
-          if (msg === 'show' || msg === 'open') {
-            controller.show();
-          }
-        });
-
-        controller.registerContainer(scope);
-
-        scope.toggle = function() {
-          scope.active = !scope.active;
-          return;
-        };
-
-        scope.hide = function() {
-          scope.active = false;
-          return;
-        };
-
-        scope.show = function() {
-          scope.active = true;
-          return;
-        };
-      }
-    }
-  }
-
-  zfAsContent.$inject = ['FoundationApi'];
-
-  function zfAsContent(foundationApi) {
-    var directive = {
-      restrict: 'EA',
-      transclude: true,
-      replace: true,
-      templateUrl: 'components/actionsheet/actionsheet-content.html',
-      require: '^zfActionSheet',
-      scope: {
-        position: '@?'
-      },
-      link: link
-    };
-
-    return directive;
-
-    function link(scope, element, attrs, controller) {
-      scope.active = false;
-      scope.position = scope.position || 'bottom';
-      controller.registerContent(scope);
-
-      scope.toggle = function() {
-        scope.active = !scope.active;
-        if(scope.active) {
-          controller.registerListener();
-        } else {
-          controller.deregisterListener();
-        }
-
-        return;
-      };
-
-      scope.hide = function() {
-        scope.active = false;
-        controller.deregisterListener();
-        return;
-      };
-
-      scope.show = function() {
-        scope.active = true;
-        controller.registerListener();
-        return;
-      };
-    }
-  }
-
-  zfAsButton.$inject = ['FoundationApi'];
-
-  function zfAsButton(foundationApi) {
-    var directive = {
-      restrict: 'EA',
-      transclude: true,
-      replace: true,
-      templateUrl: 'components/actionsheet/actionsheet-button.html',
-      require: '^zfActionSheet',
-      scope: {
-        title: '@?'
-      },
-      link: link
-    }
-
-    return directive;
-
-    function link(scope, element, attrs, controller) {
-
-      element.on('click', function(e) {
-        controller.toggle();
-        e.preventDefault();
-      });
-
-    }
-  }
-
-})();
-
-(function() {
-  'use strict';
-
   angular.module('foundation.common', ['foundation.core'])
     .directive('zfClose', zfClose)
     .directive('zfOpen', zfOpen)
@@ -45299,268 +45043,6 @@ angular.module('markdown', [])
         }
       }
       return false;
-    }
-  }
-})();
-
-(function() {
-  'use strict';
-
-  angular.module('foundation.interchange', ['foundation.core', 'foundation.mediaquery'])
-    .directive('zfInterchange', zfInterchange)
-  ;
-
-  zfInterchange.$inject = [ '$compile', '$http', '$templateCache', 'FoundationApi', 'FoundationMQ'];
-
-  function zfInterchange($compile, $http, $templateCache, foundationApi, foundationMQ) {
-
-    var directive = {
-      restrict: 'EA',
-      transclude: 'element',
-      scope: {
-        position: '@'
-      },
-      replace: true,
-      template: '<div></div>',
-      link: link
-    };
-
-    return directive;
-
-    function link(scope, element, attrs, ctrl, transclude) {
-      var childScope, current, scenarios, innerTemplates;
-
-      var globalQueries = foundationMQ.getMediaQueries();
-
-      //setup
-      foundationApi.subscribe('resize', function(msg) {
-        transclude(function(clone, newScope) {
-          if(!scenarios || !innerTemplates) {
-            collectInformation(clone);
-          }
-
-          var ruleMatches = foundationMQ.match(scenarios);
-          var scenario = ruleMatches.length === 0 ? null : scenarios[ruleMatches[0].ind];
-
-          //this could use some love
-          if(scenario && checkScenario(scenario)) {
-            var compiled;
-
-            if(childScope) {
-              childScope.$destroy();
-              childScope = null;
-            }
-
-            if(typeof scenario.templ !== 'undefined') {
-              childScope = newScope;
-
-              //temp container
-              var tmp = document.createElement('div');
-              tmp.appendChild(innerTemplates[scenario.templ][0]);
-
-              element.html(tmp.innerHTML);
-              $compile(element.contents())(childScope);
-              current = scenario;
-            } else {
-              var loader = templateLoader(scenario.src);
-              loader.success(function(html) {
-                childScope = newScope;
-                element.html(html);
-              }).then(function(){
-                $compile(element.contents())(childScope);
-                current = scenario;
-              });
-            }
-          }
-        });
-
-      });
-
-      //init
-      foundationApi.publish('resize', 'initial resize');
-
-      function templateLoader(templateUrl) {
-        return $http.get(templateUrl, {cache: $templateCache});
-      }
-
-      function collectInformation(el) {
-        var data = foundationMQ.collectScenariosFromElement(el);
-
-        scenarios = data.scenarios;
-        innerTemplates = data.templates;
-      }
-
-      function checkScenario(scenario) {
-        return !current || current !== scenario;
-      }
-    }
-  }
-
-  angular.module('foundation.interchange')
-  /*
-   * Final directive to perform media queries, other directives set up this one
-   * (See: http://stackoverflow.com/questions/19224028/add-directives-from-directive-in-angularjs)
-   */
-    .directive('zfQuery', zfQuery)
-  /*
-   * zf-if / zf-show / zf-hide
-   */
-    .directive('zfIf', zfQueryDirective('ng-if', 'zf-if'))
-    .directive('zfShow', zfQueryDirective('ng-show', 'zf-show'))
-    .directive('zfHide', zfQueryDirective('ng-hide', 'zf-hide'))
-  ;
-
-  /*
-   * This directive will configure ng-if/ng-show/ng-hide and zf-query directives and then recompile the element
-   */
-  function zfQueryDirective(angularDirective, directiveName) {
-    return ['$compile', 'FoundationApi', function ($compile, foundationApi) {
-      // create unique scope property for media query result, must be unique to avoid collision with other zf-query directives
-      // property set upon element compilation or else all similar directives (i.e. zf-if-*/zf-show-*/zf-hide-*) will get the same value
-      var queryResult;
-
-      return {
-        priority: 1000, // must compile directive before any others
-        terminal: true, // don't compile any other directive after this
-                        // we'll fix this with a recompile
-        restrict: 'A',
-        compile: compile
-      };
-
-      // From here onward, scope[queryResult] refers to the result of running the provided query
-      function compile(element, attrs) {
-        var previousParam;
-
-        // set unique property
-        queryResult = (directiveName + foundationApi.generateUuid()).replace(/-/g,'');
-
-        // set default configuration
-        element.attr('zf-query-not', false);
-        element.attr('zf-query-only', false);
-        element.attr('zf-query-or-smaller', false);
-        element.attr('zf-query-scope-prop', queryResult);
-
-        // parse directive attribute for query parameters
-        element.attr(directiveName).split(' ').forEach(function(param) {
-          if (param) {
-            // add zf-query directive and configuration attributes
-            switch (param) {
-              case "not":
-                element.attr('zf-query-not', true);
-                element.attr('zf-query-only', true);
-                break;
-              case "only":
-                element.attr('zf-query-only', true);
-                break;
-              case "or":
-                break;
-              case "smaller":
-                // allow usage of smaller keyword if preceeded by 'or' keyword
-                if (previousParam === "or") {
-                  element.attr('zf-query-or-smaller', true);
-                }
-                break;
-              default:
-                element.attr('zf-query', param);
-                break;
-            }
-
-            previousParam = param;
-          }
-        });
-
-        // add/update angular directive
-        if (!element.attr(angularDirective)) {
-          element.attr(angularDirective, queryResult);
-        } else {
-          element.attr(angularDirective, queryResult + ' && (' + element.attr(angularDirective) + ')');
-        }
-
-        // remove directive from current element to avoid infinite recompile
-        element.removeAttr(directiveName);
-        element.removeAttr('data-' + directiveName);
-
-        return {
-          pre: function (scope, element, attrs) {
-          },
-          post: function (scope, element, attrs) {
-            // recompile
-            $compile(element)(scope);
-          }
-        };
-      }
-    }];
-  }
-
-  zfQuery.$inject = ['FoundationApi', 'FoundationMQ'];
-  function zfQuery(foundationApi, foundationMQ) {
-    return {
-      priority: 601, // must compile before ng-if (600)
-      restrict: 'A',
-      compile: function compile(element, attrs) {
-        return compileWrapper(attrs['zfQueryScopeProp'],
-                              attrs['zfQuery'],
-                              attrs['zfQueryOnly'] === "true",
-                              attrs['zfQueryNot'] === "true",
-                              attrs['zfQueryOrSmaller'] === "true");
-      }
-    };
-
-    // parameters will be populated with values provided from zf-query-* attributes
-    function compileWrapper(queryResult, namedQuery, queryOnly, queryNot, queryOrSmaller) {
-      // set defaults
-      queryOnly = queryOnly || false;
-      queryNot = queryNot || false;
-
-      return {
-        pre: preLink,
-        post: postLink
-      };
-
-      // From here onward, scope[queryResult] refers to the result of running the provided query
-      function preLink(scope, element, attrs) {
-        // initially set media query result to false
-        scope[queryResult] = false;
-      }
-
-      function postLink(scope, element, attrs) {
-        // subscribe for resize events
-        foundationApi.subscribe('resize', function() {
-          var orignalVisibilty = scope[queryResult];
-          runQuery();
-          if (orignalVisibilty != scope[queryResult]) {
-            // digest if visibility changed
-            scope.$digest();
-          }
-        });
-
-        scope.$on("$destroy", function() {
-          foundationApi.unsubscribe('resize');
-        });
-
-        // run first media query check
-        runQuery();
-
-        function runQuery() {
-          if (!queryOnly) {
-            if (!queryOrSmaller) {
-              // Check if matches media or LARGER
-              scope[queryResult] = foundationMQ.matchesMedia(namedQuery);
-            } else {
-              // Check if matches media or SMALLER
-              scope[queryResult] = foundationMQ.matchesMediaOrSmaller(namedQuery);
-            }
-          } else {
-            if (!queryNot) {
-              // Check that media ONLY matches named query and nothing else
-              scope[queryResult] = foundationMQ.matchesMediaOnly(namedQuery);
-            } else {
-              // Check that media does NOT match named query
-              scope[queryResult] = !foundationMQ.matchesMediaOnly(namedQuery);
-            }
-          }
-        }
-      }
     }
   }
 })();
@@ -45824,6 +45306,268 @@ angular.module('markdown', [])
     }
   }
 
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('foundation.interchange', ['foundation.core', 'foundation.mediaquery'])
+    .directive('zfInterchange', zfInterchange)
+  ;
+
+  zfInterchange.$inject = [ '$compile', '$http', '$templateCache', 'FoundationApi', 'FoundationMQ'];
+
+  function zfInterchange($compile, $http, $templateCache, foundationApi, foundationMQ) {
+
+    var directive = {
+      restrict: 'EA',
+      transclude: 'element',
+      scope: {
+        position: '@'
+      },
+      replace: true,
+      template: '<div></div>',
+      link: link
+    };
+
+    return directive;
+
+    function link(scope, element, attrs, ctrl, transclude) {
+      var childScope, current, scenarios, innerTemplates;
+
+      var globalQueries = foundationMQ.getMediaQueries();
+
+      //setup
+      foundationApi.subscribe('resize', function(msg) {
+        transclude(function(clone, newScope) {
+          if(!scenarios || !innerTemplates) {
+            collectInformation(clone);
+          }
+
+          var ruleMatches = foundationMQ.match(scenarios);
+          var scenario = ruleMatches.length === 0 ? null : scenarios[ruleMatches[0].ind];
+
+          //this could use some love
+          if(scenario && checkScenario(scenario)) {
+            var compiled;
+
+            if(childScope) {
+              childScope.$destroy();
+              childScope = null;
+            }
+
+            if(typeof scenario.templ !== 'undefined') {
+              childScope = newScope;
+
+              //temp container
+              var tmp = document.createElement('div');
+              tmp.appendChild(innerTemplates[scenario.templ][0]);
+
+              element.html(tmp.innerHTML);
+              $compile(element.contents())(childScope);
+              current = scenario;
+            } else {
+              var loader = templateLoader(scenario.src);
+              loader.success(function(html) {
+                childScope = newScope;
+                element.html(html);
+              }).then(function(){
+                $compile(element.contents())(childScope);
+                current = scenario;
+              });
+            }
+          }
+        });
+
+      });
+
+      //init
+      foundationApi.publish('resize', 'initial resize');
+
+      function templateLoader(templateUrl) {
+        return $http.get(templateUrl, {cache: $templateCache});
+      }
+
+      function collectInformation(el) {
+        var data = foundationMQ.collectScenariosFromElement(el);
+
+        scenarios = data.scenarios;
+        innerTemplates = data.templates;
+      }
+
+      function checkScenario(scenario) {
+        return !current || current !== scenario;
+      }
+    }
+  }
+
+  angular.module('foundation.interchange')
+  /*
+   * Final directive to perform media queries, other directives set up this one
+   * (See: http://stackoverflow.com/questions/19224028/add-directives-from-directive-in-angularjs)
+   */
+    .directive('zfQuery', zfQuery)
+  /*
+   * zf-if / zf-show / zf-hide
+   */
+    .directive('zfIf', zfQueryDirective('ng-if', 'zf-if'))
+    .directive('zfShow', zfQueryDirective('ng-show', 'zf-show'))
+    .directive('zfHide', zfQueryDirective('ng-hide', 'zf-hide'))
+  ;
+
+  /*
+   * This directive will configure ng-if/ng-show/ng-hide and zf-query directives and then recompile the element
+   */
+  function zfQueryDirective(angularDirective, directiveName) {
+    return ['$compile', 'FoundationApi', function ($compile, foundationApi) {
+      // create unique scope property for media query result, must be unique to avoid collision with other zf-query directives
+      // property set upon element compilation or else all similar directives (i.e. zf-if-*/zf-show-*/zf-hide-*) will get the same value
+      var queryResult;
+
+      return {
+        priority: 1000, // must compile directive before any others
+        terminal: true, // don't compile any other directive after this
+                        // we'll fix this with a recompile
+        restrict: 'A',
+        compile: compile
+      };
+
+      // From here onward, scope[queryResult] refers to the result of running the provided query
+      function compile(element, attrs) {
+        var previousParam;
+
+        // set unique property
+        queryResult = (directiveName + foundationApi.generateUuid()).replace(/-/g,'');
+
+        // set default configuration
+        element.attr('zf-query-not', false);
+        element.attr('zf-query-only', false);
+        element.attr('zf-query-or-smaller', false);
+        element.attr('zf-query-scope-prop', queryResult);
+
+        // parse directive attribute for query parameters
+        element.attr(directiveName).split(' ').forEach(function(param) {
+          if (param) {
+            // add zf-query directive and configuration attributes
+            switch (param) {
+              case "not":
+                element.attr('zf-query-not', true);
+                element.attr('zf-query-only', true);
+                break;
+              case "only":
+                element.attr('zf-query-only', true);
+                break;
+              case "or":
+                break;
+              case "smaller":
+                // allow usage of smaller keyword if preceeded by 'or' keyword
+                if (previousParam === "or") {
+                  element.attr('zf-query-or-smaller', true);
+                }
+                break;
+              default:
+                element.attr('zf-query', param);
+                break;
+            }
+
+            previousParam = param;
+          }
+        });
+
+        // add/update angular directive
+        if (!element.attr(angularDirective)) {
+          element.attr(angularDirective, queryResult);
+        } else {
+          element.attr(angularDirective, queryResult + ' && (' + element.attr(angularDirective) + ')');
+        }
+
+        // remove directive from current element to avoid infinite recompile
+        element.removeAttr(directiveName);
+        element.removeAttr('data-' + directiveName);
+
+        return {
+          pre: function (scope, element, attrs) {
+          },
+          post: function (scope, element, attrs) {
+            // recompile
+            $compile(element)(scope);
+          }
+        };
+      }
+    }];
+  }
+
+  zfQuery.$inject = ['FoundationApi', 'FoundationMQ'];
+  function zfQuery(foundationApi, foundationMQ) {
+    return {
+      priority: 601, // must compile before ng-if (600)
+      restrict: 'A',
+      compile: function compile(element, attrs) {
+        return compileWrapper(attrs['zfQueryScopeProp'],
+                              attrs['zfQuery'],
+                              attrs['zfQueryOnly'] === "true",
+                              attrs['zfQueryNot'] === "true",
+                              attrs['zfQueryOrSmaller'] === "true");
+      }
+    };
+
+    // parameters will be populated with values provided from zf-query-* attributes
+    function compileWrapper(queryResult, namedQuery, queryOnly, queryNot, queryOrSmaller) {
+      // set defaults
+      queryOnly = queryOnly || false;
+      queryNot = queryNot || false;
+
+      return {
+        pre: preLink,
+        post: postLink
+      };
+
+      // From here onward, scope[queryResult] refers to the result of running the provided query
+      function preLink(scope, element, attrs) {
+        // initially set media query result to false
+        scope[queryResult] = false;
+      }
+
+      function postLink(scope, element, attrs) {
+        // subscribe for resize events
+        foundationApi.subscribe('resize', function() {
+          var orignalVisibilty = scope[queryResult];
+          runQuery();
+          if (orignalVisibilty != scope[queryResult]) {
+            // digest if visibility changed
+            scope.$digest();
+          }
+        });
+
+        scope.$on("$destroy", function() {
+          foundationApi.unsubscribe('resize');
+        });
+
+        // run first media query check
+        runQuery();
+
+        function runQuery() {
+          if (!queryOnly) {
+            if (!queryOrSmaller) {
+              // Check if matches media or LARGER
+              scope[queryResult] = foundationMQ.matchesMedia(namedQuery);
+            } else {
+              // Check if matches media or SMALLER
+              scope[queryResult] = foundationMQ.matchesMediaOrSmaller(namedQuery);
+            }
+          } else {
+            if (!queryNot) {
+              // Check that media ONLY matches named query and nothing else
+              scope[queryResult] = foundationMQ.matchesMediaOnly(namedQuery);
+            } else {
+              // Check that media does NOT match named query
+              scope[queryResult] = !foundationMQ.matchesMediaOnly(namedQuery);
+            }
+          }
+        }
+      }
+    }
+  }
 })();
 
 (function() {
@@ -46576,6 +46320,262 @@ angular.module('markdown', [])
     }
 
   }
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('foundation.actionsheet', ['foundation.core'])
+    .controller('ZfActionSheetController', zfActionSheetController)
+    .directive('zfActionSheet', zfActionSheet)
+    .directive('zfAsContent', zfAsContent)
+    .directive('zfAsButton', zfAsButton)
+    .service('FoundationActionSheet', FoundationActionSheet)
+  ;
+
+  FoundationActionSheet.$inject = ['FoundationApi'];
+
+  function FoundationActionSheet(foundationApi) {
+    var service    = {};
+
+    service.activate = activate;
+    service.deactivate = deactivate;
+
+    return service;
+
+    //target should be element ID
+    function activate(target) {
+      foundationApi.publish(target, 'show');
+    }
+
+    //target should be element ID
+    function deactivate(target) {
+      foundationApi.publish(target, 'hide');
+    }
+  }
+
+  zfActionSheetController.$inject = ['$scope', 'FoundationApi'];
+
+  function zfActionSheetController($scope, foundationApi) {
+    var controller = this;
+    var content = controller.content = $scope.content;
+    var container = controller.container = $scope.container;
+    var body = angular.element(document.body);
+
+    controller.registerContent = function(scope) {
+      content = scope;
+      content.active = false;
+    };
+
+    controller.registerContainer = function(scope) {
+      container = scope;
+      container.active = false;
+    };
+
+    controller.toggle = toggle;
+    controller.hide = hide;
+    controller.show = show;
+
+    controller.registerListener = function() {
+      document.body.addEventListener('click', listenerLogic);
+    };
+
+    controller.deregisterListener = function() {
+      document.body.removeEventListener('click', listenerLogic);
+    }
+
+    function listenerLogic(e) {
+      var el = e.target;
+      var insideActionSheet = false;
+
+      do {
+        if(el.classList && el.classList.contains('action-sheet-container')) {
+          insideActionSheet = true;
+          break;
+        }
+
+      } while ((el = el.parentNode));
+
+      if(!insideActionSheet) {
+        // if the element has a toggle attribute, do nothing
+        if (e.target.attributes['zf-toggle'] || e.target.attributes['zf-hard-toggle']) {
+          return;
+        };
+        // if the element is outside the action sheet and is NOT a toggle element, hide
+        hide();
+      }
+    }
+
+    function hide() {
+      content.hide();
+      container.hide();
+
+      if (!$scope.$$phase) {
+        content.$apply();
+        container.$apply();
+      }
+    }
+
+    function toggle() {
+      content.toggle();
+      container.toggle();
+
+      if (!$scope.$$phase) {
+        content.$apply();
+        container.$apply();
+      }
+    }
+
+    function show() {
+      content.show();
+      container.show();
+
+      if (!$scope.$$phase) {
+        content.$apply();
+        container.$apply();
+      }
+    }
+  }
+
+  zfActionSheet.$inject = ['FoundationApi'];
+
+  function zfActionSheet(foundationApi) {
+    var directive = {
+      restrict: 'EA',
+      transclude: true,
+      replace: true,
+      templateUrl: 'components/actionsheet/actionsheet.html',
+      controller: 'ZfActionSheetController',
+      compile: compile
+    };
+
+    return directive;
+
+    function compile() {
+
+      return {
+        pre: preLink,
+        post: postLink
+      };
+
+      function preLink(scope, iElement, iAttrs) {
+        iAttrs.$set('zf-closable', 'actionsheet');
+      }
+
+      function postLink(scope, element, attrs, controller) {
+        var id = attrs.id || foundationApi.generateUuid();
+        attrs.$set('id', id);
+
+        scope.active = false;
+
+        foundationApi.subscribe(id, function(msg) {
+          if (msg === 'toggle') {
+            controller.toggle();
+          }
+
+          if (msg === 'hide' || msg === 'close') {
+            controller.hide();
+          }
+
+          if (msg === 'show' || msg === 'open') {
+            controller.show();
+          }
+        });
+
+        controller.registerContainer(scope);
+
+        scope.toggle = function() {
+          scope.active = !scope.active;
+          return;
+        };
+
+        scope.hide = function() {
+          scope.active = false;
+          return;
+        };
+
+        scope.show = function() {
+          scope.active = true;
+          return;
+        };
+      }
+    }
+  }
+
+  zfAsContent.$inject = ['FoundationApi'];
+
+  function zfAsContent(foundationApi) {
+    var directive = {
+      restrict: 'EA',
+      transclude: true,
+      replace: true,
+      templateUrl: 'components/actionsheet/actionsheet-content.html',
+      require: '^zfActionSheet',
+      scope: {
+        position: '@?'
+      },
+      link: link
+    };
+
+    return directive;
+
+    function link(scope, element, attrs, controller) {
+      scope.active = false;
+      scope.position = scope.position || 'bottom';
+      controller.registerContent(scope);
+
+      scope.toggle = function() {
+        scope.active = !scope.active;
+        if(scope.active) {
+          controller.registerListener();
+        } else {
+          controller.deregisterListener();
+        }
+
+        return;
+      };
+
+      scope.hide = function() {
+        scope.active = false;
+        controller.deregisterListener();
+        return;
+      };
+
+      scope.show = function() {
+        scope.active = true;
+        controller.registerListener();
+        return;
+      };
+    }
+  }
+
+  zfAsButton.$inject = ['FoundationApi'];
+
+  function zfAsButton(foundationApi) {
+    var directive = {
+      restrict: 'EA',
+      transclude: true,
+      replace: true,
+      templateUrl: 'components/actionsheet/actionsheet-button.html',
+      require: '^zfActionSheet',
+      scope: {
+        title: '@?'
+      },
+      link: link
+    }
+
+    return directive;
+
+    function link(scope, element, attrs, controller) {
+
+      element.on('click', function(e) {
+        controller.toggle();
+        e.preventDefault();
+      });
+
+    }
+  }
+
 })();
 
 (function() {
