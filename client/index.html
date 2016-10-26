@@ -25,11 +25,10 @@
 
 
     <zf-offcanvas id="menu" position="left" zf-swipe-close="left">
-      <a zf-close="" class="close-button">&#735;</a>
       <section class="block-list">
       <header>Select a city</header>
       <ul>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
+        <li class="current-location"><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Frankfurt</a></li>
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Berlin</a></li>
         <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">London</a></li>
