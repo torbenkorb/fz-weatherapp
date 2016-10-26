@@ -14,17 +14,19 @@
 
       $scope.Math = window.Math;
       $scope.location = $location;
-      $scope.defaultCity = 'Frankfurt';
+      $scope.defaultCity = 'Frankfurt am Main';
 
       $scope.geocodeLatLng = function(geocoder, latlng) {
-        geocoder.geocode({'location': latlng}, function(results, status) {
+        geocoder.geocode({
+          'location': latlng,
+          'region': 'es'
+        }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             if (results) {
               console.log(results);
               var result = results[0].address_components;
                 var info = '';
-                for(var i=0; i<result.length; ++i)
-                {
+                for(var i=0; i<result.length; ++i) {
                     if(result[i].types[0]=="locality") {
                       info = result[i].long_name;
                       $scope.city = info;
@@ -49,7 +51,7 @@
         var gMapsLatLngStr = latlng.split(',', 2);
         var gMapsLatLng = {lat: parseFloat(gMapsLatLngStr[0]), lng: parseFloat(gMapsLatLngStr[1])};
 
-        var geocoder = new google.maps.Geocoder;
+        var geocoder = new google.maps.Geocoder();
         $scope.geocodeLatLng(geocoder, gMapsLatLng);
 
         $http.jsonp(forecastURL).then(function(res){
@@ -91,7 +93,13 @@
       var degrees = 360;
 
       $scope.reloadCity = function(e) {
-        $scope.loadCity($scope.city);
+        console.log($scope.city);
+        if(!($scope.city.toLowerCase() in cities)) {
+          $scope.loadCity('Current Location');
+        } else {
+          $scope.loadCity($scope.city);
+        }
+
         // angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
         // angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
         // degrees += 360;
@@ -157,12 +165,12 @@
 
   var cities = {
 
-    "frankfurt" : { coords: { latitude: 50.1109221, longitude: 8.682126700000026 } },
+    "frankfurt am main" : { coords: { latitude: 50.1109221, longitude: 8.682126700000026 } },
     "berlin" : { coords: { latitude: 52.52000659999999, longitude: 13.404953999999975 } },
     "london" : { coords: { latitude: 51.5073509, longitude: -0.12775829999998223 } },
     "new york" : { coords: { latitude: 40.7127837, longitude: -74.00594130000002 } },
     "los angeles" : { coords: { latitude: 34.0522342, longitude: -118.2436849 } },
-    "tokyo" : { coords: { latitude: 35.6894875, longitude: 139.69170639999993 } },
+    "tokyo" : { coords: { latitude: 35.7090259, longitude: 139.73199249999993 } },
     "current location" : {}
 
   };
