@@ -12,14 +12,46 @@
   ])
     .controller('ForecastApi', function($scope, $http, $location) {
 
-      console.log($scope);
-
       $scope.Math = window.Math;
       $scope.location = $location;
+      $scope.defaultCity = 'Frankfurt';
+
+      $scope.geocodeLatLng = function(geocoder, latlng) {
+        geocoder.geocode({'location': latlng}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results) {
+              console.log(results);
+              var result = results[0].address_components;
+                var info = '';
+                for(var i=0; i<result.length; ++i)
+                {
+                    if(result[i].types[0]=="locality") {
+                      info = result[i].long_name;
+                      $scope.city = info;
+                    }
+                }
+                console.log(info);
+
+
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+      };
 
       $scope.loadWeather = function(cityCoords) {
+
         var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
         var forecastURL = 'https://api.darksky.net/forecast/9c5f115423c6a7bdf61901d449355c00/' + latlng + '?units=si&callback=JSON_CALLBACK';
+        var gMapsLatLngStr = latlng.split(',', 2);
+        var gMapsLatLng = {lat: parseFloat(gMapsLatLngStr[0]), lng: parseFloat(gMapsLatLngStr[1])};
+
+        var geocoder = new google.maps.Geocoder;
+        $scope.geocodeLatLng(geocoder, gMapsLatLng);
+
         $http.jsonp(forecastURL).then(function(res){
           $scope.json = res.data;
           $scope.icon = icons[$scope.json.currently.icon];
@@ -52,7 +84,7 @@
       };
 
       $scope.loadDefaultCity = function() {
-        $scope.loadCity('Frankfurt');
+        $scope.loadCity($scope.defaultCity);
       };
       $scope.loadDefaultCity();
 
@@ -80,6 +112,9 @@
       toggleCanvas.on('swipeleft', function() {
         console.log('Close the canvas');
       });
+
+
+
 
 
 
@@ -133,3 +168,5 @@
   };
 
 })();
+
+
