@@ -14,14 +14,13 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
     <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChR7vDLPoVrup8izzz4hV7CeCjDJiLBPE"
-        async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChR7vDLPoVrup8izzz4hV7CeCjDJiLBPE"></script>
     <script src="./assets/js/foundation.js"></script>
     <script src="./assets/js/templates.js"></script>
     <script src="./assets/js/routes.js"></script>
     <script src="./assets/js/app.js"></script>
   </head>
-  <body ng-controller="ForecastApi" zf-esc-close>
+  <body ng-controller="WeatherAppController" zf-esc-close>
 
     <div class="loader" ng-show="loading"><span class="loader__rotation"></span></div>
 
@@ -31,12 +30,9 @@
       <header>Select a city</header>
       <ul>
         <li class="current-location"><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Current Location</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Frankfurt am Main</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Berlin</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">London</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">New York</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Los Angeles</a></li>
-        <li><a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">Tokyo</a></li>
+        <li ng-repeat="(key, value) in cities">
+          <a ng-click="acceptSelection($event)" zf-close="menu" ui-sref="home">{{key}}</a>
+        </li>
         <li><a zf-close="menu" ui-sref="about">About</a></li>
       </ul>
       </section>
@@ -53,6 +49,8 @@
       </div>
 
       <div ui-view class="main-content grid-content text-center"></div>
+
+      <div ng-click="saveLocation()">Save Location</div>
 
     </div>
   </body>

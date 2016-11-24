@@ -90,6 +90,10 @@ p.lead {
   top: 1.35rem;
 }
 
+.block-list li > a {
+  text-transform: uppercase;
+}
+
 
 .block-list li.current-location a {
   padding-left: 2.5rem;
