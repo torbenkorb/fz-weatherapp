@@ -8,21 +8,22 @@ url: /
   <span class="{{ icon }}"></span>
   <h1>{{ Math.round(json.currently.temperature) }}&#176;</h1>
   <p class="lead">{{ json.currently.summary }}</p>
+  <p class="lead hint">{{ Math.round(json.daily.data[0].temperatureMax) }}&#176;/{{ Math.round(json.daily.data[0].temperatureMin) }}&#176;</p>
   <div class="grid-block small-up-3 text-center forecast">
     <div class="vertical grid-block">
       <p>{{ json.daily.data[1].time * 1000 | date : "EEEE" }}</p>
       <h3 class="{{ icon1 }}"></h3>
-      <h3>{{ Math.round(json.daily.data[0].temperatureMax) }}&#176;/{{ Math.round(json.daily.data[1].temperatureMin) }}&#176;</h3>
+      <h3>{{ Math.round(json.daily.data[1].temperatureMax) }}&#176;/{{ Math.round(json.daily.data[1].temperatureMin) }}&#176;</h3>
     </div>
     <div class="vertical grid-block">
       <p>{{ json.daily.data[2].time * 1000 | date: "EEEE" }}</p>
       <h3 class="{{ icon2 }}"></h3>
-      <h3>{{ Math.round(json.daily.data[1].temperatureMax) }}&#176;/{{ Math.round(json.daily.data[2].temperatureMin) }}&#176;</h3>
+      <h3>{{ Math.round(json.daily.data[2].temperatureMax) }}&#176;/{{ Math.round(json.daily.data[2].temperatureMin) }}&#176;</h3>
     </div>
     <div class="vertical grid-block">
       <p>{{ json.daily.data[3].time * 1000 | date: "EEEE" }}</p>
       <h3 class="{{ icon3 }}"></h3>
-      <h3>{{ Math.round(json.daily.data[2].temperatureMax) }}&#176;/<span class="light">{{ Math.round(json.daily.data[3].temperatureMin) }}&#176;</span></h3>
+      <h3>{{ Math.round(json.daily.data[3].temperatureMax) }}&#176;/<span class="light">{{ Math.round(json.daily.data[3].temperatureMin) }}&#176;</span></h3>
     </div>
   </div>
 

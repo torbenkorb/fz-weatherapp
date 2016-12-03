@@ -22,8 +22,7 @@
         "berlin" : { coords: { latitude: 52.52000659999999, longitude: 13.404953999999975 } },
         "london" : { coords: { latitude: 51.5073509, longitude: -0.12775829999998223 } },
         "new york" : { coords: { latitude: 40.7127837, longitude: -74.00594130000002 } },
-        "los angeles" : { coords: { latitude: 34.0522342, longitude: -118.2436849 } },
-        "tokyo" : { coords: { latitude: 35.7090259, longitude: 139.73199249999993 } }
+        "los angeles" : { coords: { latitude: 34.0522342, longitude: -118.2436849 } }
 
       };
 
@@ -77,6 +76,9 @@
             name: $scope.city,
             coords: cityCoords.coords
           };
+          $scope.showAddButton();
+          console.log($scope.currentLocation.name);
+          console.log($scope.currentLocation.name.toLowerCase() in $scope.cities);
         });
 
       };
@@ -120,8 +122,6 @@
       };
 
       $scope.saveLocation = function() {
-        console.log('Save location!');
-        console.log($scope.currentLocation);
         $scope.cities[$scope.currentLocation.name.toLowerCase()] = {
           coords: {
             latitude: $scope.currentLocation.coords.latitude,
@@ -129,47 +129,64 @@
           }
         };
         storeData();
+        saveMessage();
         console.log($scope.cities);
       };
 
 
-      function storeData() {
+      function initData() {
         if (storageAvailable('localStorage')) {
           // Yippee! We can use localStorage awesomeness
-          if(!localStorage.getItem('berlin')) {
-            // Populate Storage if no data available
-            angular.forEach($scope.cities, function(value, key) {
-              console.log(key, value);
-              localStorage.setItem(key, value.coords.latitude + ',' + value.coords.longitude);
-            });
-          } else {
-            // Read the existing data
-            console.log('Rebuild the cities object in scope from the local storage');
-          }
+            if(localStorage.length === 0) {
+              angular.forEach($scope.cities, function(value, key) {
+                console.log(key, value);
+                localStorage.setItem(key, value.coords.latitude + ',' + value.coords.longitude);
+              });
+            } else {
+              angular.forEach(localStorage, function(value, key) {
+
+                var coords = value.split(',');
+                console.log(key, coords[0], coords[1]);
+                $scope.cities[key] = { coords: { latitude: coords[0], longitude: coords[1] } };
+              });
+              console.log('The scope cities are: ', $scope.cities);
+            }
         }
       }
-      storeData();
+      initData();
+
+      function storeData() {
+        localStorage.setItem($scope.currentLocation.name.toLowerCase(), $scope.currentLocation.coords.latitude + ',' + $scope.currentLocation.coords.longitude);
+      }
+
+      function saveMessage() {
+        console.log($scope.currentLocation.name + ' was saved to your list of locations.');
+      }
+
+      $scope.showAddButton = function() {
+        if($scope.currentLocation.name.toLowerCase() in $scope.cities) {
+          $scope.showAdd = true;
+        }
+        else {
+          $scope.showAdd = false;
+        }
+      };
 
 
+      // var refreshGesture = new Hammer(document.getElementById('mainApp'));
+      // refreshGesture.on('swipedown', function(ev) {
+      //   $scope.reloadCity();
+      // });
+      // refreshGesture.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 
 
-
-      var refreshGesture = new Hammer(document.getElementById('mainApp'));
-      refreshGesture.on('swipedown', function(ev) {
-        $scope.reloadCity();
-      });
-      refreshGesture.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-
-
-      var toggleCanvas = new Hammer(document.getElementById('mainApp'));
-      toggleCanvas.on('swiperight', function() {
-        console.log('Open the canvas');
-      });
-      toggleCanvas.on('swipeleft', function() {
-        console.log('Close the canvas');
-      });
-
-
+      // var toggleCanvas = new Hammer(document.getElementById('mainApp'));
+      // toggleCanvas.on('swiperight', function() {
+      //   console.log('Open the canvas');
+      // });
+      // toggleCanvas.on('swipeleft', function() {
+      //   console.log('Close the canvas');
+      // });
 
 
 
