@@ -7203,8 +7203,10 @@ html, body,
       touch-action: none; }
 
 .off-canvas ~ .grid-frame {
-  background-image: -webkit-linear-gradient(300deg, #3A539B 35%, #F64747);
-  background-image: linear-gradient(150deg, #3A539B 35%, #F64747); }
+  /* background-image: -webkit-linear-gradient(300deg,#3A539B 35%,#F64747);*/
+  /* background-image: linear-gradient(150deg,#3A539B 35%,#F64747);*/
+  background-image: -webkit-linear-gradient(300deg, #3A539B, #855CCC, #BF5299, #F64747);
+  background-image: linear-gradient(150deg, #3A539B, #855CCC, #BF5299, #F64747); }
 
 .title-bar a {
   color: #fff;
