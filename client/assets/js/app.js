@@ -77,8 +77,6 @@
             coords: cityCoords.coords
           };
           $scope.showAddButton();
-          console.log($scope.currentLocation.name);
-          console.log($scope.currentLocation.name.toLowerCase() in $scope.cities);
         });
 
       };
@@ -107,8 +105,6 @@
       };
       $scope.loadDefaultCity();
 
-      var degrees = 360;
-
       $scope.reloadCity = function(e) {
         if(!($scope.city.toLowerCase() in $scope.cities)) {
           $scope.loadCity('Current Location');
@@ -116,9 +112,6 @@
           $scope.loadCity($scope.city);
         }
 
-        // angular.element(e.currentTarget).find('svg').css('transition', '-webkit-transform 800ms ease');
-        // angular.element(e.currentTarget).find('svg').css('-webkit-transform', 'rotate(' + degrees + 'deg)');
-        // degrees += 360;
       };
 
       $scope.saveLocation = function() {
@@ -130,33 +123,22 @@
         };
         storeData();
         saveMessage();
-        console.log($scope.cities);
       };
 
 
       function initData() {
         if (storageAvailable('localStorage')) {
-          // Yippee! We can use localStorage awesomeness
-            if(localStorage.length === 0) {
-              angular.forEach($scope.cities, function(value, key) {
-                console.log(key, value);
-                localStorage.setItem(key, value.coords.latitude + ',' + value.coords.longitude);
-              });
+            if(!localStorage.getItem('WeatherApp')) {
+              storeData();
             } else {
-              angular.forEach(localStorage, function(value, key) {
-
-                var coords = value.split(',');
-                console.log(key, coords[0], coords[1]);
-                $scope.cities[key] = { coords: { latitude: coords[0], longitude: coords[1] } };
-              });
-              console.log('The scope cities are: ', $scope.cities);
+              $scope.cities = JSON.parse(localStorage.getItem('WeatherApp'));
             }
         }
       }
       initData();
 
       function storeData() {
-        localStorage.setItem($scope.currentLocation.name.toLowerCase(), $scope.currentLocation.coords.latitude + ',' + $scope.currentLocation.coords.longitude);
+        localStorage.setItem('WeatherApp', JSON.stringify($scope.cities));
       }
 
       function saveMessage() {

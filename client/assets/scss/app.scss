@@ -165,8 +165,8 @@ p.lead {
 
 
 .add-button {
-  color: #fff;
-  background-color: #AD1457;
+  color: rgba(0,0,0,0.54);
+  background-color: #fff;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -174,10 +174,10 @@ p.lead {
   bottom: 24px;
   right: 24px;
   line-height: 56px;
-  font-size: 24px;
+  font-size: 40px;
   text-align: center;
-  font-weight: bold;
   box-shadow: 0 2px 3px rgba(0,0,0,0.36);
+  cursor: pointer;
 
   &:after {
     content: "+";
